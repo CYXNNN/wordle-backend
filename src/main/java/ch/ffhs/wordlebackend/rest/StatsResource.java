@@ -28,7 +28,7 @@ public class StatsResource {
 	private StatsRepo repo;
 
 	@PutMapping("/")
-	public @ResponseBody HttpStatus push(@Valid @RequestBody StatsPutDto dto) {
+	public @ResponseBody StatsDto push(@Valid @RequestBody StatsPutDto dto) {
 
 		var userStats = repo.findById(dto.identifier).orElse(new Stats());
 
@@ -38,9 +38,8 @@ public class StatsResource {
 		userStats.setGames(games);
 		userStats.increment(dto.numberOfTries);
 
-		repo.save(userStats);
+		return StatsDto.fromEntity(repo.save(userStats));
 
-		return HttpStatus.OK;
 	}
 
 	@GetMapping("/{identifier}")
