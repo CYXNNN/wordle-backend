@@ -32,11 +32,10 @@ public class StatsResource {
 	@CrossOrigin("http://localhost:3000")
 	public @ResponseBody StatsDto push(@Valid @RequestBody StatsPutDto dto) {
 
-		var userStats = repo.findById(dto.identifier).orElse(new Stats());
+		Stats userStats = repo.findById(dto.identifier).orElse(new Stats());
 
 		userStats.setIdentifier(dto.identifier);
 
-		var games = userStats.getGames() + 1;
 		userStats.increment(dto.numberOfTries);
 
 		return StatsDto.fromEntity(repo.save(userStats));
@@ -46,7 +45,7 @@ public class StatsResource {
 	@GetMapping("/{identifier}")
 	@CrossOrigin("http://localhost:3000")
 	public @ResponseBody StatsDto get(@PathVariable("identifier") String identifier) {
-		var entity = repo.findById(identifier)
+		Stats entity = repo.findById(identifier)
 				.orElseThrow(() -> new NullPointerException("user not found"));
 
 		return StatsDto.fromEntity(entity);

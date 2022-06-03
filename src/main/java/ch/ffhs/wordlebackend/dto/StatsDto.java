@@ -21,7 +21,7 @@ public class StatsDto {
 	public Integer sixthTry;
 
 	public static StatsDto fromEntity(Stats entity) {
-		var dto = new StatsDto();
+		StatsDto dto = new StatsDto();
 		dto.identifier = entity.getIdentifier();
 		dto.games = entity.getGames();
 		dto.firstTry = entity.getFirstTry();
