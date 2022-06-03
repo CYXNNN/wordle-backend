@@ -13,6 +13,7 @@ import ch.ffhs.wordlebackend.repo.StatsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -28,6 +29,7 @@ public class StatsResource {
 	private StatsRepo repo;
 
 	@PutMapping("/")
+	@CrossOrigin("http://localhost:3000")
 	public @ResponseBody StatsDto push(@Valid @RequestBody StatsPutDto dto) {
 
 		var userStats = repo.findById(dto.identifier).orElse(new Stats());
@@ -35,7 +37,6 @@ public class StatsResource {
 		userStats.setIdentifier(dto.identifier);
 
 		var games = userStats.getGames() + 1;
-		userStats.setGames(games);
 		userStats.increment(dto.numberOfTries);
 
 		return StatsDto.fromEntity(repo.save(userStats));
@@ -43,6 +44,7 @@ public class StatsResource {
 	}
 
 	@GetMapping("/{identifier}")
+	@CrossOrigin("http://localhost:3000")
 	public @ResponseBody StatsDto get(@PathVariable("identifier") String identifier) {
 		var entity = repo.findById(identifier)
 				.orElseThrow(() -> new NullPointerException("user not found"));
@@ -52,6 +54,7 @@ public class StatsResource {
 	}
 
 	@GetMapping("/")
+	@CrossOrigin("http://localhost:3000")
 	public @ResponseBody
 	List<StatsDto> getAll() {
 		return StreamSupport.stream(repo.findAll().spliterator(), false)
