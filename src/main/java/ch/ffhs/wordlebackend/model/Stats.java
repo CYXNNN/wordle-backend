@@ -38,6 +38,9 @@ public class Stats {
 	private Integer sixthTry = 0;
 
 	public void increment(Integer numberOfTries) {
+
+		this.games = this.games + 1;
+
 		switch (numberOfTries) {
 			case 6: this.sixthTry = this.sixthTry + 1; break;
 			case 5: this.fifthTry = this.fifthTry + 1; break;
@@ -45,6 +48,7 @@ public class Stats {
 			case 3: this.thirdTry = this.thirdTry + 1; break;
 			case 2: this.secondTry = this.secondTry + 1; break;
 			case 1: this.firstTry = this.firstTry + 1; break;
+			default: break;
 		}
 	}
 }

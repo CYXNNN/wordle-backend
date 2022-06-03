@@ -12,7 +12,7 @@ public class StatsPutDto {
 
 	@NotNull
 	@Min(1)
-	@Max(6)
+	@Max(7)
 	public Integer numberOfTries;
 
 
